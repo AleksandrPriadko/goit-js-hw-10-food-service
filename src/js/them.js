@@ -7,32 +7,29 @@ const refs = {
     toolBox: document.querySelector('#theme-switch-toggle'),
     body: document.querySelector('body'),
 }
-const savedTheme = localStorage.getItem('theme');
 
-if (savedTheme === JSON.stringify(Theme.DARK)) {
-    refs.body.classList.add(`${Theme.DARK}`);
-    refs.toolBox.setAttribute('checked', 'true');
-} else {
-    refs.body.classList.add(`${Theme.LIGHT}`);
-    localStorage.setItem('theme', JSON.stringify(Theme.LIGHT));
+refs.body.classList.add(Theme.LIGHT)
+
+refs.toolBox.addEventListener('change', changeTheme);
+
+
+function changeTheme() {
+    refs.toolBox.checked ? checkedDarkTheme() : checkedLigthTheme();
 }
-
 function checkedDarkTheme() {
-    refs.toolBox.setAttribute('checked', 'true');
-    refs.body.classList.replace(`${Theme.LIGHT}`, `${Theme.DARK}`);
-    localStorage.setItem('theme', JSON.stringify(Theme.DARK));
+    refs.body.classList.replace(Theme.LIGHT, Theme.DARK);
+    localStorage.setItem('theme', Theme.DARK);
 }
 
 function checkedLigthTheme() {
-    refs.toolBox.removeAttribute('checked');
-    refs.body.classList.replace(`${Theme.DARK}`, `${Theme.LIGHT}`);
-    localStorage.setItem('theme', JSON.stringify(Theme.LIGHT));
+    refs.body.classList.replace(Theme.DARK, Theme.LIGHT);
+    localStorage.setItem('theme', Theme.LIGHT);
 }
 
-function changeTheme() {
-    if (refs.toolBox.hasAttribute('checked')) {
-        checkedLigthTheme();
-    } else checkedDarkTheme();
+if (localStorage.getItem('theme') === Theme.DARK) {
+    refs.toolBox.checked = true;
+    refs.body.classList.add(Theme.DARK);
+} else {
+    refs.body.classList.replace(Theme.DARK, Theme.LIGHT);
+    refs.toolBox.checked = false;
 }
-
-refs.toolBox.addEventListener('change', changeTheme);
