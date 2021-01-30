@@ -17,6 +17,7 @@ function changeTheme() {
     refs.toolBox.checked ? checkedDarkTheme() : checkedLigthTheme();
 }
 function checkedDarkTheme() {
+    refs.toolBox.checked = true;
     refs.body.classList.replace(Theme.LIGHT, Theme.DARK);
     localStorage.setItem('theme', Theme.DARK);
 }
